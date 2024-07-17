@@ -1,0 +1,72 @@
+(function() {
+    const quizContainer = document.getElementById('quiz');
+    const resultsContainer = document.getElementById('results');
+    const submitButton = document.getElementById('submit');
+
+    const quizQuestions = [
+        {
+            question: "Qual é a minha cor favorita?"
+        },
+        {
+            question: "Qual foi o nosso primeiro filme juntos?"
+        },
+        {
+            question: "Qual é o meu prato preferido?"
+        },
+        {
+            question: "Complete a frase: 'Você é a pessoa mais ______ da minha vida.'"
+        },
+        {
+            question: "Qual foi o lugar mais memorável que visitamos juntos?"
+        },
+        {
+            question: "Qual é a nossa música favorita?"
+        },
+        {
+            question: "Qual é a minha estação do ano favorita?"
+        },
+        {
+            question: "Qual é o meu maior sonho?"
+        },
+        {
+            question: "Qual é a minha bebida favorita?"
+        },
+        {
+            question: "Surpresa! Quer namorar comigo?"
+        }
+    ];
+
+    function buildQuiz() {
+        const output = [];
+
+        quizQuestions.forEach((currentQuestion, questionNumber) => {
+            output.push(
+                `<div class="question">
+                    <label>${currentQuestion.question}</label>
+                    <input type="text" name="question${questionNumber}">
+                </div>`
+            );
+        });
+
+        quizContainer.innerHTML = output.join('');
+    }
+
+    function showResults() {
+        const answerContainers = quizContainer.querySelectorAll('.question input[type="text"]');
+        const answers = [];
+
+        answerContainers.forEach((input, questionNumber) => {
+            answers.push({
+                question: quizQuestions[questionNumber].question,
+                answer: input.value
+            });
+        });
+
+        resultsContainer.innerHTML = answers.map(item => `<p>${item.question} <strong>${item.answer}</strong></p>`).join('') +
+                                     `<p><strong>Quer namorar comigo?</strong></p>`;
+    }
+
+    buildQuiz();
+
+    submitButton.addEventListener('click', showResults);
+})();
